@@ -98,11 +98,21 @@ const BookingPage = () => {
 
     setIsSubmitting(true);
 
+    // TODO: Connect to backend API when available
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
-      alert('Booking request submitted successfully! Our team will contact you shortly to confirm your reservation.');
-      navigate('/');
+      // Navigate to confirmation page with booking details
+      if (room) {
+        const total = calculateTotal();
+        navigate(
+          `/booking-confirmation?bookingId=CONF-${Date.now()}&roomName=${encodeURIComponent(
+            room.name
+          )}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${total.toFixed(2)}`
+        );
+      } else {
+        navigate('/booking-confirmation');
+      }
     }, 1500);
   };
 

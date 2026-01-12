@@ -6,9 +6,12 @@ import HomePage from './pages/HomePage';
 import RoomsPage from './pages/RoomsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import BookingPage from './pages/BookingPage';
+import BookingConfirmationPage from './pages/BookingConfirmationPage';
 import DiningPage from './pages/DiningPage';
 import SpaPage from './pages/SpaPage';
 import EventsPage from './pages/EventsPage';
+import GalleryPage from './pages/GalleryPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
@@ -21,9 +24,12 @@ function App() {
             <Route path="/rooms" element={<RoomsPage />} />
             <Route path="/rooms/:id" element={<RoomDetailPage />} />
             <Route path="/book" element={<BookingPage />} />
+            <Route path="/booking-confirmation" element={<BookingConfirmationPage />} />
             <Route path="/dining" element={<DiningPage />} />
             <Route path="/spa" element={<SpaPage />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
         <Footer />

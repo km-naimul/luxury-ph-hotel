@@ -12,8 +12,8 @@ const navigationLinks: NavigationLink[] = [
   { label: 'Dining', path: '/dining' },
   { label: 'Spa', path: '/spa' },
   { label: 'Events', path: '/events' },
-  { label: 'Gallery', path: '#gallery' },
-  { label: 'Contact', path: '#contact' },
+  { label: 'Gallery', path: '/gallery' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 const Navigation = () => {
@@ -30,13 +30,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLinkClick = (path: string) => {
-    if (path.startsWith('#')) {
-      const element = document.querySelector(path);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+  const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -75,36 +69,19 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            {navigationLinks.map((link) => {
-              if (link.path.startsWith('#')) {
-                return (
-                  <a
-                    key={link.path}
-                    href={link.path}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleLinkClick(link.path);
-                    }}
-                    className={`${navTextColor} hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200`}
-                  >
-                    {link.label}
-                  </a>
-                );
-              }
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    isActive(link.path)
-                      ? 'text-primary-600 border-b-2 border-primary-600'
-                      : `${navTextColor} hover:text-primary-600`
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+            {navigationLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                  isActive(link.path)
+                    ? 'text-primary-600 border-b-2 border-primary-600'
+                    : `${navTextColor} hover:text-primary-600`
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
               to="/book"
               className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
@@ -153,37 +130,20 @@ const Navigation = () => {
         }`}
       >
         <div className="px-4 pt-2 pb-4 space-y-1 bg-white/95 backdrop-blur-md border-t border-neutral-200">
-          {navigationLinks.map((link) => {
-            if (link.path.startsWith('#')) {
-              return (
-                <a
-                  key={link.path}
-                  href={link.path}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLinkClick(link.path);
-                  }}
-                  className="block px-3 py-2 text-base font-medium text-neutral-700 hover:text-primary-600 hover:bg-neutral-50 rounded-md transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              );
-            }
-            return (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => handleLinkClick(link.path)}
-                className={`block px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 ${
-                  isActive(link.path)
-                    ? 'text-primary-600 bg-primary-50'
-                    : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {navigationLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() => handleLinkClick(link.path)}
+              className={`block px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 ${
+                isActive(link.path)
+                  ? 'text-primary-600 bg-primary-50'
+                  : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             to="/book"
             onClick={() => handleLinkClick('/book')}
