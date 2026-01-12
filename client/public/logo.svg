@@ -1,0 +1,12 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SK+ Text -->
+  <text x="2" y="28" font-family="Playfair Display, serif" font-size="28" font-weight="800" fill="currentColor">
+    SK<tspan fill="#F59E0B">+</tspan>
+  </text>
+  <!-- Divider line -->
+  <line x1="50" y1="8" x2="50" y2="32" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+  <!-- Hotel text -->
+  <text x="56" y="28" font-family="Playfair Display, serif" font-size="14" font-weight="300" fill="currentColor" letter-spacing="4">
+    HOTEL
+  </text>
+</svg>

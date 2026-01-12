@@ -1,0 +1,186 @@
+export interface Room {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  images: string[];
+  price: number;
+  size: string;
+  capacity: string;
+  bedType: string;
+  features: string[];
+  amenities: string[];
+  highlights: string[];
+  policies: string[];
+  view: string;
+  floor: string;
+  checkIn: string;
+  checkOut: string;
+}
+
+export const rooms: Room[] = [
+  {
+    id: 'deluxe-room',
+    name: 'Deluxe Room',
+    category: 'Standard',
+    description: 'Sophisticated comfort with modern amenities and elegant design. A perfect blend of style and functionality for the discerning traveler.',
+    longDescription: 'Our Deluxe Room offers a harmonious blend of contemporary elegance and timeless comfort. Featuring plush furnishings, state-of-the-art technology, and thoughtful amenities, this space is designed for both relaxation and productivity. The room features large windows that flood the space with natural light, offering serene garden or city views. The marble bathroom includes premium toiletries and a rainfall shower, while the well-appointed workspace ensures you can stay productive during your visit.',
+    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 320,
+    size: '35 m²',
+    capacity: '2 Guests',
+    bedType: 'Queen/King Bed',
+    view: 'Garden/City View',
+    floor: '2nd - 8th Floor',
+    checkIn: '3:00 PM',
+    checkOut: '11:00 AM',
+    features: ['Garden/City View', 'Balcony', 'Smart TV', 'Work Space'],
+    amenities: ['Free WiFi', 'Espresso Machine', 'Premium Toiletries', 'Room Service', 'Daily Housekeeping', 'Air Conditioning', 'Safe', 'Mini Refrigerator'],
+    highlights: ['Modern Design', 'Great Value', 'Prime Location'],
+    policies: ['Free cancellation up to 48 hours', 'No smoking', 'Pet-friendly options available'],
+  },
+  {
+    id: 'executive-suite',
+    name: 'Executive Suite',
+    category: 'Suite',
+    description: 'Spacious elegance with panoramic city views and premium amenities. Perfect for business travelers and couples seeking comfort and sophistication.',
+    longDescription: 'The Executive Suite represents the perfect fusion of business functionality and residential comfort. This expansive suite features a separate living area with a comfortable seating arrangement, ideal for informal meetings or relaxation. The bedroom area is elegantly appointed with premium linens and offers stunning panoramic city views. The suite includes a well-equipped workspace with high-speed internet and office supplies. The luxurious marble bathroom features both a spacious walk-in shower and a deep soaking tub, complemented by premium bath amenities. Perfect for extended stays or business travelers who appreciate space and comfort.',
+    image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 450,
+    size: '55 m²',
+    capacity: '2 Guests',
+    bedType: 'King Bed',
+    view: 'Panoramic City View',
+    floor: '9th - 15th Floor',
+    checkIn: '3:00 PM',
+    checkOut: '12:00 PM',
+    features: ['City View', 'Living Area', 'Work Desk', 'Minibar'],
+    amenities: ['Free WiFi', 'Smart TV', 'Nespresso Machine', 'Marble Bathroom', 'Premium Toiletries', 'Separate Living Room', 'Work Desk', 'Mini Bar', 'Room Service', 'Concierge Service'],
+    highlights: ['Panoramic Views', 'Spacious Layout', 'Business Amenities'],
+    policies: ['Free cancellation up to 72 hours', 'Late checkout available', 'Complimentary breakfast'],
+  },
+  {
+    id: 'junior-suite',
+    name: 'Junior Suite',
+    category: 'Suite',
+    description: 'Elevated comfort with separate seating area and enhanced amenities. Ideal for extended stays and families.',
+    longDescription: 'The Junior Suite offers an ideal solution for guests seeking additional space without compromising on luxury. This beautifully designed suite features a distinct living area with comfortable seating, perfect for entertaining or relaxing. The sleeping area is thoughtfully separated, ensuring privacy and tranquility. Large windows offer abundant natural light and pleasant views of the surrounding area. The suite includes a dining table for in-room meals, a fully stocked minibar, and premium entertainment options. The spacious bathroom features double vanities, a walk-in shower, and luxurious bath amenities. Ideal for families or guests planning extended stays.',
+    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 550,
+    size: '65 m²',
+    capacity: '3 Guests',
+    bedType: 'King Bed + Sofa',
+    view: 'City View',
+    floor: '10th - 16th Floor',
+    checkIn: '3:00 PM',
+    checkOut: '12:00 PM',
+    features: ['Seating Area', 'City View', 'Balcony', 'Dining Table'],
+    amenities: ['Free WiFi', 'Smart TV', 'Mini Bar', 'Premium Toiletries', 'Espresso Machine', 'Separate Seating', 'Dining Area', 'Room Service', 'Concierge'],
+    highlights: ['Spacious', 'Family Friendly', 'Extended Stay'],
+    policies: ['Free cancellation up to 72 hours', 'Extra bed available', 'Child-friendly amenities'],
+  },
+  {
+    id: 'grand-suite',
+    name: 'Grand Suite',
+    category: 'Suite',
+    description: 'Majestic elegance with grand proportions, sophisticated furnishings, and exceptional views. A statement of refined luxury.',
+    longDescription: 'The Grand Suite embodies the essence of luxury living with its majestic proportions and sophisticated design. This expansive suite features a grand living room with high ceilings, elegant furnishings, and floor-to-ceiling windows that offer breathtaking panoramic views. A formal dining area provides the perfect setting for intimate gatherings or business entertainment. The master bedroom is a sanctuary of comfort, featuring a king-size bed with premium linens and a separate dressing area. The opulent bathroom is a highlight, featuring a freestanding bathtub, separate walk-in shower, and dual vanities. Premium bar setup, personalized concierge service, and exclusive access to hotel facilities make this suite ideal for guests who demand the finest.',
+    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 850,
+    size: '95 m²',
+    capacity: '4 Guests',
+    bedType: 'King Bed + Pull-out Sofa',
+    view: 'Panoramic City View',
+    floor: '16th - 20th Floor',
+    checkIn: '2:00 PM',
+    checkOut: '12:00 PM',
+    features: ['Grand Living Room', 'Dining Area', 'Master Bathroom', 'Study'],
+    amenities: ['Premium Bar Setup', 'Smart Home System', 'Premium Linen', 'Luxury Toiletries', 'Concierge Service', 'Private Check-in', 'Butler Service Available', 'Premium Minibar', 'Entertainment System'],
+    highlights: ['Grand Proportions', 'Elegant Design', 'Premium Amenities'],
+    policies: ['Free cancellation up to 7 days', 'Complimentary airport transfer', 'Priority check-in/check-out'],
+  },
+  {
+    id: 'presidential-suite',
+    name: 'Presidential Suite',
+    category: 'Luxury Suite',
+    description: 'Ultimate luxury with separate living areas, private terrace, and exclusive butler service. The pinnacle of sophisticated accommodation.',
+    longDescription: 'The Presidential Suite represents the absolute zenith of luxury hospitality. This magnificent suite spans an entire floor corner, offering unparalleled space and privacy. The grand foyer welcomes you into a world of sophisticated elegance, leading to a spacious living room with bespoke furnishings and a grand piano. The formal dining room seats eight guests and is perfect for hosting intimate dinners. The private terrace offers stunning panoramic views and is equipped with outdoor furniture for alfresco dining or relaxation. The master bedroom features a king-size bed with premium Italian linens, a separate study, and a walk-in closet. The luxurious bathroom includes a spa bath, steam shower, and premium amenities. A dedicated butler is assigned to ensure every detail of your stay is perfect. Exclusive access to private facilities and personalized services make this suite truly exceptional.',
+    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 1200,
+    size: '120 m²',
+    capacity: '4 Guests',
+    bedType: 'King Bed + Sofa Bed',
+    view: '360° Panoramic Views',
+    floor: '20th - 25th Floor',
+    checkIn: '2:00 PM',
+    checkOut: '2:00 PM',
+    features: ['Private Terrace', 'Separate Living Room', 'Dining Area', 'Jacuzzi'],
+    amenities: ['Butler Service', 'Premium Bar', 'Wine Cellar Access', 'Spa Bath', 'Premium Linen', '24/7 Concierge', 'Private Elevator Access', 'Grand Piano', 'Entertainment System', 'Personalized Service'],
+    highlights: ['Butler Service', 'Private Terrace', 'Luxury Experience'],
+    policies: ['Free cancellation up to 14 days', 'Complimentary limousine service', 'Personalized concierge', 'Flexible check-in/check-out'],
+  },
+  {
+    id: 'penthouse-suite',
+    name: 'Penthouse Suite',
+    category: 'Luxury Suite',
+    description: 'Exclusive rooftop sanctuary with 360-degree views, private elevator access, and the highest level of personalized service.',
+    longDescription: 'The Penthouse Suite is our most exclusive accommodation, occupying the entire top floor with breathtaking 360-degree panoramic views. This extraordinary suite features a dramatic double-height living room with floor-to-ceiling windows, a grand fireplace, and bespoke art pieces. The master suite includes a private study, dressing room, and a bathroom with a glass-enclosed shower overlooking the city. A second guest room provides additional accommodation for visiting guests. The private rooftop terrace spans the entire suite, featuring an outdoor dining area, lounge space, and a private pool with city views. Private elevator access ensures complete privacy. A dedicated team including a butler, personal chef (on request), and concierge ensures an unparalleled experience. This is the ultimate expression of luxury living.',
+    image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    ],
+    price: 2500,
+    size: '180 m²',
+    capacity: '6 Guests',
+    bedType: 'King Bed + 2 Guest Rooms',
+    view: '360° Rooftop Views',
+    floor: 'Top Floor',
+    checkIn: '12:00 PM',
+    checkOut: '4:00 PM',
+    features: ['360° Views', 'Private Elevator', 'Rooftop Terrace', 'Private Pool'],
+    amenities: ['Dedicated Butler', 'Private Chef Available', 'Wine Collection', 'Spa Services', 'Luxury Car Service', 'Private Gym Access', 'Private Pool', 'Rooftop Terrace', 'Entertainment System', 'Personalized Everything'],
+    highlights: ['Rooftop Location', 'Ultimate Privacy', 'Premium Service'],
+    policies: ['Flexible cancellation policy', 'Complimentary private jet concierge', 'Personalized service team', 'Extended check-in/check-out'],
+  },
+];
