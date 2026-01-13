@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 interface NavigationLink {
   label: string;
@@ -18,6 +19,8 @@ const navigationLinks: NavigationLink[] = [
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, logout, user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -32,6 +35,12 @@ const Navigation = () => {
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMobileMenuOpen(false);
+    navigate('/');
   };
 
   const isActive = (path: string) => {
@@ -82,76 +91,185 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/book"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            >
-              Book Now
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                    isActive('/dashboard')
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : `${navTextColor} hover:text-primary-600`
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                {user?.role === 'admin' && (
+                  <Link
+                    to="/admin/dashboard"
+                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                      isActive('/admin/dashboard')
+                        ? 'text-primary-600 border-b-2 border-primary-600'
+                        : `${navTextColor} hover:text-primary-600`
+                    }`}
+                  >
+                    Admin
+                  </Link>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                    isActive('/login')
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : `${navTextColor} hover:text-primary-600`
+                  }`}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/book"
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  Book Now
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            {isAuthenticated && (
+              <span className={`${navTextColor} text-sm mr-2`}>Hi, {user?.firstName}</span>
+            )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200 ${
-                isScrolled || !isHomePage
-                  ? 'text-neutral-700 hover:bg-neutral-100'
-                  : 'text-white hover:bg-white/10'
-              }`}
-              aria-label="Toggle menu"
+              className={`inline-flex items-center justify-center p-2 rounded-md ${
+                isScrolled || !isHomePage ? 'text-neutral-700' : 'text-white'
+              } hover:text-primary-600 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500`}
+              aria-expanded="false"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isMobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
+              <span className="sr-only">Open main menu</span>
+              {!isMobileMenuOpen ? (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu, show/hide based on menu state. */}
       <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen
-            ? 'max-h-96 opacity-100'
-            : 'max-h-0 opacity-0 overflow-hidden'
-        }`}
+        className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} ${
+          isScrolled || !isHomePage ? 'bg-white shadow-lg' : 'bg-neutral-800'
+        } pb-3 space-y-1 sm:px-3`}
       >
-        <div className="px-4 pt-2 pb-4 space-y-1 bg-white/95 backdrop-blur-md border-t border-neutral-200">
-          {navigationLinks.map((link) => (
+        {navigationLinks.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            onClick={() => handleLinkClick()}
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              isActive(link.path)
+                ? 'text-primary-600 bg-primary-50'
+                : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
+            }`}
+          >
+            {link.label}
+          </Link>
+        ))}
+        {isAuthenticated ? (
+          <>
             <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => handleLinkClick(link.path)}
-              className={`block px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 ${
-                isActive(link.path)
+              to="/dashboard"
+              onClick={() => handleLinkClick()}
+              className={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive('/dashboard')
                   ? 'text-primary-600 bg-primary-50'
                   : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
               }`}
             >
-              {link.label}
+              Dashboard
             </Link>
-          ))}
-          <Link
-            to="/book"
-            onClick={() => handleLinkClick('/book')}
-            className="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-base font-semibold mt-4 transition-colors duration-200"
-          >
-            Book Now
-          </Link>
-        </div>
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin/dashboard"
+                onClick={() => handleLinkClick()}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  isActive('/admin/dashboard')
+                    ? 'text-primary-600 bg-primary-50'
+                    : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
+                }`}
+              >
+                Admin Dashboard
+              </Link>
+            )}
+            <button
+              onClick={handleLogout}
+              className="block w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full text-base font-semibold mt-4 transition-colors duration-200"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              onClick={() => handleLinkClick()}
+              className={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive('/login')
+                  ? 'text-primary-600 bg-primary-50'
+                  : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
+              }`}
+            >
+              Login
+            </Link>
+            <Link
+              to="/book"
+              onClick={() => handleLinkClick()}
+              className="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-base font-semibold mt-4 transition-colors duration-200"
+            >
+              Book Now
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

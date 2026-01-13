@@ -1,8 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { rooms } from '../data/rooms';
 
 const RoomsSection = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBookNow = (roomId: string) => {
+    if (!isAuthenticated) {
+      navigate('/login', { state: { from: { pathname: '/book', search: `?room=${roomId}` } } });
+    } else {
+      navigate(`/book?room=${roomId}`);
+    }
+  };
+
   return (
     <section id="rooms" className="py-24 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,8 +161,61 @@ const RoomsSection = () => {
           ))}
         </div>
 
+        {/* Login/Logout Section */}
+        <div className="mt-20 text-center bg-white p-12 rounded-sm shadow-lg card-hover mb-8">
+          <h3 className="text-2xl font-display font-bold text-neutral-900 mb-4">
+            {isAuthenticated ? `Welcome back, ${user?.firstName}!` : 'Ready to Book?'}
+          </h3>
+          <p className="text-neutral-600 mb-6 font-light">
+            {isAuthenticated
+              ? 'Manage your bookings and explore more options from your dashboard.'
+              : 'Login to access your dashboard and manage your reservations.'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Go to Dashboard
+                </Link>
+                {user?.role === 'admin' && (
+                  <Link
+                    to="/admin/dashboard"
+                    className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-neutral-800 hover:bg-neutral-900 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
+                <button
+                  onClick={logout}
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-white border-2 border-neutral-300 hover:border-primary-600 text-neutral-700 hover:text-primary-700 font-medium uppercase tracking-wide rounded-sm"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+
         {/* Comparison CTA */}
-        <div className="mt-20 text-center bg-white p-12 rounded-sm shadow-lg card-hover">
+        <div className="mt-8 text-center bg-white p-12 rounded-sm shadow-lg card-hover">
           <h3 className="text-3xl font-display font-bold text-neutral-900 mb-4">
             Need Help Choosing?
           </h3>

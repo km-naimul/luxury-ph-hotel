@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 interface HeroSectionProps {
   title?: string;
@@ -20,6 +21,7 @@ const HeroSection = ({
   primaryCTA = { text: 'Book Now', href: '#book' },
   secondaryCTA = { text: 'Explore', href: '#rooms' },
 }: HeroSectionProps) => {
+  const { isAuthenticated, user, logout } = useAuth();
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     if (href.startsWith('#')) {
@@ -58,18 +60,45 @@ const HeroSection = ({
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in delay-300">
-          <Link
-            to="/book"
-            className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-primary-600 hover:bg-primary-700 text-white text-base font-medium tracking-wider uppercase rounded-sm shadow-2xl hover:shadow-primary-600/50 min-w-[200px] border border-primary-500/30"
-          >
-            {primaryCTA.text}
-          </Link>
-          <Link
-            to="/rooms"
-            className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-white/20 hover:border-white/40 min-w-[200px]"
-          >
-            {secondaryCTA.text}
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-primary-600 hover:bg-primary-700 text-white text-base font-medium tracking-wider uppercase rounded-sm shadow-2xl hover:shadow-primary-600/50 min-w-[200px] border border-primary-500/30"
+              >
+                Go to Dashboard
+              </Link>
+              {user?.role === 'admin' && (
+                <Link
+                  to="/admin/dashboard"
+                  className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-white/20 hover:border-white/40 min-w-[200px]"
+                >
+                  Admin Dashboard
+                </Link>
+              )}
+              <button
+                onClick={logout}
+                className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-red-600/80 hover:bg-red-700 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-red-500/30 hover:border-red-400/50 min-w-[200px]"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/book"
+                className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-primary-600 hover:bg-primary-700 text-white text-base font-medium tracking-wider uppercase rounded-sm shadow-2xl hover:shadow-primary-600/50 min-w-[200px] border border-primary-500/30"
+              >
+                {primaryCTA.text}
+              </Link>
+              <Link
+                to="/login"
+                className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-white/20 hover:border-white/40 min-w-[200px]"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
 

@@ -1,6 +1,11 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const DiningSection = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <section id="dining" className="py-24 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0">
@@ -55,6 +60,59 @@ const DiningSection = () => {
                 className="image-zoom w-full h-full object-cover"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Login/Logout Section */}
+        <div className="mt-20 text-center bg-white/10 backdrop-blur-md p-12 rounded-sm border border-white/20">
+          <h3 className="text-3xl font-display font-bold text-white mb-4">
+            {isAuthenticated ? `Welcome, ${user?.firstName}!` : 'Reserve Your Table'}
+          </h3>
+          <p className="text-white/80 mb-6 font-light text-lg">
+            {isAuthenticated
+              ? 'Access your dashboard to manage reservations and explore more dining options.'
+              : 'Login to make reservations and access exclusive dining experiences.'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Go to Dashboard
+                </Link>
+                {user?.role === 'admin' && (
+                  <Link
+                    to="/admin/dashboard"
+                    className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-neutral-800 hover:bg-neutral-900 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
+                <button
+                  onClick={logout}
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-red-600/80 hover:bg-red-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 hover:border-white/50 font-medium uppercase tracking-wide rounded-sm"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
