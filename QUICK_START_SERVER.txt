@@ -1,0 +1,32 @@
+🚀 QUICK START - Backend Server
+================================
+
+The error "ERR_CONNECTION_REFUSED" means the backend server is NOT running.
+
+TO FIX:
+-------
+1. Open a NEW terminal/command prompt window
+2. Run these commands:
+
+   cd "c:\project\Luxury ph hotel\server"
+   npm run dev
+
+3. You should see:
+   ✅ Connected to MongoDB
+   🚀 Server is running on http://localhost:5000
+
+4. Keep that terminal window OPEN while using the app
+
+5. Go back to your browser and try registering again
+
+IMPORTANT:
+----------
+- The backend server MUST be running for the app to work
+- Keep the terminal window open
+- Don't close it until you're done using the app
+
+IF YOU SEE ERRORS:
+------------------
+- Make sure you're in the correct folder (server folder)
+- Make sure MongoDB connection is working
+- Check that port 5000 is not already in use

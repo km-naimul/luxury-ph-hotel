@@ -31,8 +31,8 @@ const BookingConfirmationPage = () => {
     <div className="pt-24 min-h-screen bg-neutral-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Success Icon */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
+        <div className="text-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6 animate-fade-in delay-300">
             <svg
               className="w-12 h-12 text-green-600"
               fill="none"
@@ -45,7 +45,7 @@ const BookingConfirmationPage = () => {
               <path d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-neutral-900 mb-4 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-neutral-900 mb-4 tracking-tight animate-fade-in delay-200">
             Booking Confirmed!
           </h1>
           <p className="text-xl text-neutral-600 font-light">

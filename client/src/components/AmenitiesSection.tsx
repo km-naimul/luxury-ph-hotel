@@ -56,9 +56,9 @@ const AmenitiesSection = () => {
           {amenities.map((amenity, index) => (
             <div
               key={index}
-              className="text-center p-8 bg-neutral-50 rounded-sm hover:bg-primary-50/30 transition-colors duration-300 group"
+              className="card-hover text-center p-8 bg-neutral-50 rounded-sm hover:bg-primary-50/30 group"
             >
-              <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+              <div className="text-5xl mb-4 transition-smooth group-hover:scale-110">
                 {amenity.icon}
               </div>
               <h3 className="text-xl font-display font-bold text-neutral-900 mb-2">

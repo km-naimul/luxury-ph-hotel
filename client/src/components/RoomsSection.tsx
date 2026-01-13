@@ -23,11 +23,11 @@ const RoomsSection = () => {
             >
               {/* Image */}
               <div className={`relative ${index % 2 === 1 ? 'md:order-2' : ''}`}>
-                <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-2xl group">
+                <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-2xl group card-hover">
                   <img
                     src={room.image}
                     alt={room.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="image-zoom w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-4 py-2 bg-white/95 backdrop-blur-sm text-primary-700 text-sm font-medium uppercase tracking-wide rounded-sm">
@@ -133,13 +133,13 @@ const RoomsSection = () => {
                 <div className="flex gap-4">
                   <Link
                     to={`/book?room=${room.id}`}
-                    className="inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
                   >
                     Book Now
                   </Link>
                   <Link
                     to={`/rooms/${room.id}`}
-                    className="inline-flex items-center justify-center px-8 py-3 bg-white border-2 border-neutral-300 hover:border-primary-600 text-neutral-700 hover:text-primary-700 font-medium uppercase tracking-wide rounded-sm transition-all duration-300"
+                    className="btn-hover-lift inline-flex items-center justify-center px-8 py-3 bg-white border-2 border-neutral-300 hover:border-primary-600 text-neutral-700 hover:text-primary-700 font-medium uppercase tracking-wide rounded-sm"
                   >
                     View Details
                   </Link>
@@ -150,7 +150,7 @@ const RoomsSection = () => {
         </div>
 
         {/* Comparison CTA */}
-        <div className="mt-20 text-center bg-white p-12 rounded-sm shadow-lg">
+        <div className="mt-20 text-center bg-white p-12 rounded-sm shadow-lg card-hover">
           <h3 className="text-3xl font-display font-bold text-neutral-900 mb-4">
             Need Help Choosing?
           </h3>
@@ -159,7 +159,7 @@ const RoomsSection = () => {
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-10 py-4 bg-neutral-900 hover:bg-neutral-800 text-white font-medium uppercase tracking-wide rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-neutral-900 hover:bg-neutral-800 text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl"
           >
             Contact Concierge
           </a>

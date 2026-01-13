@@ -73,16 +73,16 @@ const RoomDetailPage = () => {
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`aspect-square overflow-hidden rounded-sm transition-all duration-300 ${
+                className={`transition-smooth aspect-square overflow-hidden rounded-sm ${
                   selectedImage === index
-                    ? 'ring-4 ring-primary-600 scale-105'
+                    ? 'ring-4 ring-primary-600 scale-105 opacity-100'
                     : 'opacity-70 hover:opacity-100 hover:scale-105'
                 }`}
               >
                 <img
                   src={img}
                   alt={`${room.name} view ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="image-zoom w-full h-full object-cover"
                 />
               </button>
             ))}

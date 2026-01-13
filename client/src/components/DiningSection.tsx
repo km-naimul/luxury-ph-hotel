@@ -48,11 +48,11 @@ const DiningSection = () => {
             </div>
           </div>
           <div className="relative">
-            <div className="aspect-[4/5] rounded-sm overflow-hidden shadow-2xl">
+            <div className="aspect-[4/5] rounded-sm overflow-hidden shadow-2xl card-hover">
               <img
                 src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                 alt="Fine dining experience"
-                className="w-full h-full object-cover"
+                className="image-zoom w-full h-full object-cover"
               />
             </div>
           </div>

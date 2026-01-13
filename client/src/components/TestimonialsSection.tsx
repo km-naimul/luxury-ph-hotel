@@ -45,7 +45,7 @@ const TestimonialsSection = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-neutral-50 p-8 rounded-sm border border-neutral-200 hover:shadow-xl transition-shadow duration-300"
+              className="card-hover bg-neutral-50 p-8 rounded-sm border border-neutral-200"
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (

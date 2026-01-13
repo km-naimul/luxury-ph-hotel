@@ -22,11 +22,27 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API routes will be added here in future phases
-// Example:
-// app.use('/api/auth', authRoutes);
-// app.use('/api/rooms', roomsRoutes);
-// app.use('/api/bookings', bookingsRoutes);
+// API routes
+import roomsRoutes from './routes/rooms.routes';
+import bookingsRoutes from './routes/bookings.routes';
+import authRoutes from './routes/auth.routes';
+import contactRoutes from './routes/contact.routes';
+import paymentRoutes from './routes/payment.routes';
+import { apiLimiter } from './middleware/rateLimiter.middleware';
+
+// Apply rate limiting to all API routes (except webhooks)
+app.use('/api', (req, res, next) => {
+  if (req.path.startsWith('/payments/webhook')) {
+    return next(); // Skip rate limiting for webhooks
+  }
+  return apiLimiter(req, res, next);
+});
+
+app.use('/api/rooms', roomsRoutes);
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Error handling middleware (must be last)
 app.use(notFoundHandler);

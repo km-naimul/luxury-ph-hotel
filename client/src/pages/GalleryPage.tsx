@@ -242,17 +242,18 @@ const GalleryPage = () => {
 
         {/* Image Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredImages.map((image) => (
+          {filteredImages.map((image, index) => (
             <div
               key={image.id}
-              className="group relative overflow-hidden rounded-sm shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
+              className="card-hover group relative overflow-hidden rounded-sm shadow-lg cursor-pointer bg-white"
               onClick={() => openLightbox(image)}
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
               <div className="aspect-square overflow-hidden">
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="image-zoom w-full h-full object-cover"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

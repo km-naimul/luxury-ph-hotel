@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { rooms } from '../data/rooms';
+import { apiClient } from '../services/api';
 
 const BookingPage = () => {
   const location = useLocation();
@@ -91,29 +92,53 @@ const BookingPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted!'); // Debug log
     
     if (!validateForm()) {
+      console.log('Validation failed');
+      return;
+    }
+
+    if (!room || !selectedRoom) {
+      setErrors({ room: 'Please select a room' });
       return;
     }
 
     setIsSubmitting(true);
+    setErrors({}); // Clear previous errors
 
-    // TODO: Connect to backend API when available
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Create booking via API
+      const bookingData = {
+        roomId: selectedRoom, // Using slug, backend will resolve to MongoDB _id
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        checkIn,
+        checkOut,
+        guests,
+        specialRequests: formData.specialRequests || undefined,
+      };
+
+      console.log('Sending booking data:', bookingData);
+      const response: any = await apiClient.createBooking(bookingData);
+      console.log('Booking response:', response);
+      
+      // Backend returns { success: true, data: booking, message: "..." }
+      const booking = response.data || response;
+
       // Navigate to confirmation page with booking details
-      if (room) {
-        const total = calculateTotal();
-        navigate(
-          `/booking-confirmation?bookingId=CONF-${Date.now()}&roomName=${encodeURIComponent(
-            room.name
-          )}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${total.toFixed(2)}`
-        );
-      } else {
-        navigate('/booking-confirmation');
-      }
-    }, 1500);
+      navigate(
+        `/booking-confirmation?bookingId=${booking.bookingNumber}&roomName=${encodeURIComponent(
+          booking.room?.name || room.name
+        )}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${(booking.totalAmount || calculateTotal()).toFixed(2)}`
+      );
+    } catch (error: any) {
+      console.error('Booking error:', error);
+      setErrors({ submit: error.message || 'Failed to create booking. Please try again.' });
+      setIsSubmitting(false);
+    }
   };
 
   const nights = calculateNights();
@@ -389,12 +414,28 @@ const BookingPage = () => {
                     </span>
                   </div>
 
+                  {errors.submit && (
+                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-sm text-red-800 text-sm">
+                      {errors.submit}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-neutral-400 text-white font-medium uppercase tracking-wide rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl mb-4"
+                    className="btn-hover-lift w-full px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:hover:transform-none text-white font-medium uppercase tracking-wide rounded-sm shadow-lg hover:shadow-xl mb-4 relative overflow-hidden"
                   >
-                    {isSubmitting ? 'Processing...' : 'Confirm Booking'}
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="spinner h-5 w-5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </span>
+                    ) : (
+                      'Confirm Booking'
+                    )}
                   </button>
                 </>
               ) : (

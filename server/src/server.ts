@@ -4,8 +4,8 @@ import { connectDatabase } from './config/database';
 
 const startServer = async (): Promise<void> => {
   try {
-    // Connect to MongoDB (commented out for now, uncomment when ready to use)
-    // await connectDatabase();
+    // Connect to MongoDB
+    await connectDatabase();
 
     // Start Express server
     app.listen(env.port, () => {

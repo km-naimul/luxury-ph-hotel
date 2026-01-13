@@ -48,25 +48,25 @@ const HeroSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in-up">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-8 leading-[1.1] tracking-tight text-balance">
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-8 leading-[1.1] tracking-tight text-balance animate-fade-in delay-100">
           <span className="block">{title}</span>
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-neutral-100 mb-12 max-w-4xl mx-auto leading-relaxed px-4 font-light tracking-wide">
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-neutral-100 mb-12 max-w-4xl mx-auto leading-relaxed px-4 font-light tracking-wide animate-fade-in delay-200">
           {subtitle}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in delay-300">
           <Link
             to="/book"
-            className="inline-flex items-center justify-center px-10 py-4 bg-primary-600 hover:bg-primary-700 text-white text-base font-medium tracking-wider uppercase rounded-sm transition-all duration-300 shadow-2xl hover:shadow-primary-600/50 transform hover:-translate-y-1 min-w-[200px] border border-primary-500/30"
+            className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-primary-600 hover:bg-primary-700 text-white text-base font-medium tracking-wider uppercase rounded-sm shadow-2xl hover:shadow-primary-600/50 min-w-[200px] border border-primary-500/30"
           >
             {primaryCTA.text}
           </Link>
           <Link
             to="/rooms"
-            className="inline-flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-white/20 hover:border-white/40 transition-all duration-300 min-w-[200px]"
+            className="btn-hover-lift inline-flex items-center justify-center px-10 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white text-base font-medium tracking-wider uppercase rounded-sm border border-white/20 hover:border-white/40 min-w-[200px]"
           >
             {secondaryCTA.text}
           </Link>

@@ -1,0 +1,37 @@
+HOW TO START BACKEND SERVER IN COMMAND PROMPT (CMD)
+
+Method 1: Navigate step by step
+================================
+C:
+cd \project
+cd "Luxury ph hotel"
+cd server
+npm run dev
+
+Method 2: Use full path directly
+=================================
+cd /d "C:\project\Luxury ph hotel\server"
+npm run dev
+
+Method 3: Use PowerShell instead (RECOMMENDED)
+===============================================
+1. Press Windows key + X
+2. Select "Windows PowerShell" or "Terminal"
+3. Run these commands:
+   cd "c:\project\Luxury ph hotel\server"
+   npm run dev
+
+Method 4: Use VS Code Terminal
+================================
+1. Open VS Code
+2. Open the project folder
+3. Press Ctrl + ` (backtick) to open terminal
+4. Type: cd server
+5. Type: npm run dev
+
+TROUBLESHOOTING:
+================
+If 'cd' command doesn't work, try:
+- Use PowerShell instead of CMD
+- Restart your command prompt
+- Use the full path: cd /d "C:\project\Luxury ph hotel\server"
