@@ -83,6 +83,19 @@ class ApiClient {
   async getBookingById(id: string) {
     return this.request<any>(`/bookings/${id}`);
   }
+
+  async updateBooking(id: string, data: { status?: string; checkIn?: string; checkOut?: string; guests?: number; specialRequests?: string }) {
+    return this.request<any>(`/bookings/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async cancelBooking(id: string) {
+    return this.request<any>(`/bookings/${id}`, {
+      method: 'DELETE',
+    });
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

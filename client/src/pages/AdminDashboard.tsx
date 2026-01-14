@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { apiClient } from '../services/api';
 
 interface Booking {
@@ -45,7 +46,6 @@ const AdminDashboard = () => {
     try {
       setLoading(true);
       setError(null);
-      // Note: In production, get token from auth context/storage
       const response = await apiClient.getBookings(filter !== 'all' ? undefined : undefined, filter !== 'all' ? filter : undefined);
       
       if (response.success) {
@@ -72,6 +72,124 @@ const AdminDashboard = () => {
       console.error('Error fetching bookings:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleConfirmBooking = async (booking: Booking) => {
+    const result = await Swal.fire({
+      title: 'Confirm Booking?',
+      html: `
+        <p>Are you sure you want to confirm this booking?</p>
+        <div class="text-left mt-4">
+          <p><strong>Booking #:</strong> ${booking.bookingNumber}</p>
+          <p><strong>Guest:</strong> ${booking.guest?.firstName} ${booking.guest?.lastName}</p>
+          <p><strong>Room:</strong> ${booking.room?.name}</p>
+          <p><strong>Amount:</strong> $${booking.totalAmount.toFixed(2)}</p>
+        </div>
+      `,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#10b981',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, confirm it!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'rounded-lg',
+        confirmButton: 'px-6 py-2 rounded-md',
+        cancelButton: 'px-6 py-2 rounded-md',
+      },
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await apiClient.updateBooking(booking._id, { status: 'confirmed' });
+        
+        if (response.success) {
+          await Swal.fire({
+            title: 'Confirmed!',
+            text: 'The booking has been confirmed successfully.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            customClass: {
+              popup: 'rounded-lg',
+              confirmButton: 'px-6 py-2 rounded-md',
+            },
+          });
+          fetchBookings(); // Refresh bookings
+        } else {
+          throw new Error(response.message || 'Failed to confirm booking');
+        }
+      } catch (err: any) {
+        await Swal.fire({
+          title: 'Error!',
+          text: err.message || 'Failed to confirm booking. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          customClass: {
+            popup: 'rounded-lg',
+            confirmButton: 'px-6 py-2 rounded-md',
+          },
+        });
+      }
+    }
+  };
+
+  const handleCancelBooking = async (booking: Booking) => {
+    const result = await Swal.fire({
+      title: 'Cancel Booking?',
+      html: `
+        <p>Are you sure you want to cancel this booking?</p>
+        <div class="text-left mt-4">
+          <p><strong>Booking #:</strong> ${booking.bookingNumber}</p>
+          <p><strong>Guest:</strong> ${booking.guest?.firstName} ${booking.guest?.lastName}</p>
+          <p><strong>Room:</strong> ${booking.room?.name}</p>
+          <p><strong>Amount:</strong> $${booking.totalAmount.toFixed(2)}</p>
+        </div>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+      customClass: {
+        popup: 'rounded-lg',
+        confirmButton: 'px-6 py-2 rounded-md',
+        cancelButton: 'px-6 py-2 rounded-md',
+      },
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await apiClient.cancelBooking(booking._id);
+        
+        if (response.success) {
+          await Swal.fire({
+            title: 'Cancelled!',
+            text: 'The booking has been cancelled successfully.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            customClass: {
+              popup: 'rounded-lg',
+              confirmButton: 'px-6 py-2 rounded-md',
+            },
+          });
+          fetchBookings(); // Refresh bookings
+        } else {
+          throw new Error(response.message || 'Failed to cancel booking');
+        }
+      } catch (err: any) {
+        await Swal.fire({
+          title: 'Error!',
+          text: err.message || 'Failed to cancel booking. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          customClass: {
+            popup: 'rounded-lg',
+            confirmButton: 'px-6 py-2 rounded-md',
+          },
+        });
+      }
     }
   };
 
@@ -253,26 +371,24 @@ const AdminDashboard = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
-                          className="text-primary-600 hover:text-primary-700 mr-4"
-                          onClick={() => {
-                            // TODO: Implement view/edit
-                            alert('View/Edit feature coming soon');
-                          }}
-                        >
-                          View
-                        </button>
-                        {booking.status === 'confirmed' && (
-                          <button
-                            className="text-red-600 hover:text-red-700"
-                            onClick={() => {
-                              // TODO: Implement cancellation
-                              alert('Cancel feature coming soon');
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        )}
+                        <div className="flex flex-col gap-2">
+                          {booking.status === 'pending' && (
+                            <button
+                              className="text-green-600 hover:text-green-700 font-medium"
+                              onClick={() => handleConfirmBooking(booking)}
+                            >
+                              Confirm
+                            </button>
+                          )}
+                          {(booking.status === 'confirmed' || booking.status === 'pending') && (
+                            <button
+                              className="text-red-600 hover:text-red-700 font-medium"
+                              onClick={() => handleCancelBooking(booking)}
+                            >
+                              Cancel
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}

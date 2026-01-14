@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { apiClient } from '../services/api';
 
 interface Booking {
@@ -38,8 +39,6 @@ const CustomerDashboard = () => {
     try {
       setLoading(true);
       setError(null);
-      // Note: In production, get token from auth context/storage
-      const token = localStorage.getItem('token');
       const response = await apiClient.getBookings();
       
       if (response.success) {
@@ -60,6 +59,65 @@ const CustomerDashboard = () => {
       console.error('Error fetching bookings:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelBooking = async (booking: Booking) => {
+    const result = await Swal.fire({
+      title: 'Cancel Booking?',
+      html: `
+        <p>Are you sure you want to cancel this booking?</p>
+        <div class="text-left mt-4">
+          <p><strong>Booking #:</strong> ${booking.bookingNumber}</p>
+          <p><strong>Room:</strong> ${booking.room?.name}</p>
+          <p><strong>Check-in:</strong> ${formatDate(booking.checkIn)}</p>
+          <p><strong>Check-out:</strong> ${formatDate(booking.checkOut)}</p>
+        </div>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+      customClass: {
+        popup: 'rounded-lg',
+        confirmButton: 'px-6 py-2 rounded-md',
+        cancelButton: 'px-6 py-2 rounded-md',
+      },
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await apiClient.cancelBooking(booking._id);
+        
+        if (response.success) {
+          await Swal.fire({
+            title: 'Cancelled!',
+            text: 'Your booking has been cancelled successfully.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            customClass: {
+              popup: 'rounded-lg',
+              confirmButton: 'px-6 py-2 rounded-md',
+            },
+          });
+          fetchBookings(); // Refresh bookings
+        } else {
+          throw new Error(response.message || 'Failed to cancel booking');
+        }
+      } catch (err: any) {
+        await Swal.fire({
+          title: 'Error!',
+          text: err.message || 'Failed to cancel booking. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          customClass: {
+            popup: 'rounded-lg',
+            confirmButton: 'px-6 py-2 rounded-md',
+          },
+        });
+      }
     }
   };
 
@@ -214,13 +272,10 @@ const CustomerDashboard = () => {
                       >
                         View Room Details
                       </Link>
-                      {booking.status === 'confirmed' && (
+                      {(booking.status === 'confirmed' || booking.status === 'pending') && (
                         <button
                           className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-sm transition-colors"
-                          onClick={() => {
-                            // TODO: Implement cancellation
-                            alert('Cancellation feature coming soon');
-                          }}
+                          onClick={() => handleCancelBooking(booking)}
                         >
                           Cancel Booking
                         </button>
