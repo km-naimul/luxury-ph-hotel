@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: luxury-hotel-api
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: cd server && npm install && npm run build
+    startCommand: cd server && npm start
+    healthCheckPath: /health

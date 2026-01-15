@@ -101,6 +101,14 @@ export const createPaymentIntent = async (req: AuthRequest, res: Response): Prom
 
 // Handle Stripe webhook
 export const handleWebhook = async (req: Request, res: Response): Promise<void> => {
+  if (!stripe) {
+    res.status(503).json({
+      success: false,
+      message: 'Payment service is not configured',
+    });
+    return;
+  }
+
   const sig = req.headers['stripe-signature'] as string;
 
   let event: Stripe.Event;
@@ -182,7 +190,7 @@ export const verifyPayment = async (req: AuthRequest, res: Response): Promise<vo
     }
 
     // If payment intent exists, check with Stripe
-    if (booking.paymentIntentId) {
+    if (booking.paymentIntentId && stripe) {
       try {
         const paymentIntent = await stripe.paymentIntents.retrieve(booking.paymentIntentId);
         

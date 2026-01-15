@@ -8,14 +8,23 @@ export interface JWTPayload {
 }
 
 export const generateToken = (payload: JWTPayload): string => {
-  return jwt.sign(payload, env.jwtSecret as string, {
-    expiresIn: env.jwtExpiresIn,
+  const secret = env.jwtSecret;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not configured');
+  }
+  // Cast to any to bypass strict typing issues with jsonwebtoken
+  return (jwt.sign as any)(payload, secret, {
+    expiresIn: env.jwtExpiresIn || '7d',
   });
 };
 
 export const verifyToken = (token: string): JWTPayload => {
   try {
-    return jwt.verify(token, env.jwtSecret as string) as JWTPayload;
+    const secret = env.jwtSecret;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not configured');
+    }
+    return jwt.verify(token, secret) as JWTPayload;
   } catch (error) {
     throw new Error('Invalid or expired token');
   }
