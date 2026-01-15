@@ -6,8 +6,27 @@ import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 const app: Express = express();
 
 // Middleware
+// Allow multiple origins for development and production
+const allowedOrigins = env.clientUrl.includes(',') 
+  ? env.clientUrl.split(',').map(url => url.trim())
+  : [
+      env.clientUrl,
+      'http://localhost:5173',
+      'https://luxury-ph-hotel.web.app',
+      'https://luxury-ph-hotel.firebaseapp.com'
+    ];
+
 app.use(cors({
-  origin: env.clientUrl,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin) || allowedOrigins.some(allowed => origin?.startsWith(allowed))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());
